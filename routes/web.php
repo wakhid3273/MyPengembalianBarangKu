@@ -22,7 +22,7 @@ Route::middleware('guest')->group(function () {
     // Login
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-    
+
     // Register
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
@@ -37,27 +37,27 @@ Route::middleware('auth')->group(function () {
             ->orderBy('created_at', 'desc')
             ->take(12) // Ambil 12 item terbaru
             ->get();
-        
+
         return view('dashboard', compact('recentItems'));
     })->name('dashboard');
-    
+
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    
+
     // Routes untuk Profil
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    
+
     // Routes untuk Items (Pelaporan Barang)
     Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
     Route::post('/items', [ItemController::class, 'store'])->name('items.store');
     // Routes Pencarian Barang (letakkan sebelum route parameterized `/{id}`)
     Route::get('/items/search', [ItemController::class, 'search'])->name('items.search');
     Route::get('/items/detail/{id}', [ItemController::class, 'detail'])->name('items.detail');
-    
+
     // Routes untuk Klaim Barang
     Route::post('/items/{id}/claim', [ItemController::class, 'claim'])->name('items.claim');
-    
+
     // Routes untuk Edit dan Delete Item (hanya owner)
     Route::get('/items/{id}/edit', [ItemController::class, 'edit'])->name('items.edit');
     Route::put('/items/{id}', [ItemController::class, 'update'])->name('items.update');
@@ -65,4 +65,16 @@ Route::middleware('auth')->group(function () {
 
     // Route show untuk item berdasarkan id (letakkan setelah route spesifik di atas)
     Route::get('/items/{id}', [ItemController::class, 'show'])->name('items.show');
+
+    // Admin Routes
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+        // Users Management
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+
+        // Categories Management
+        Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+
+        // Statistics
+        Route::get('/stats', [\App\Http\Controllers\Admin\StatsController::class, 'index'])->name('stats.index');
+    });
 });

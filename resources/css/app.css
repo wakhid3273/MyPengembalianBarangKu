@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;600;700;800&display=swap');
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -6,6 +7,22 @@
 @source '../**/*.js';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary-50: #f4f7f6;
+    --color-primary-100: #e3ebe8;
+    --color-primary-200: #c5d9d3;
+    --color-primary-300: #9abfb6;
+    --color-primary-400: #6b9e94;
+    --color-primary-500: #4d8279;
+    --color-primary-600: #3b6861;
+    --color-primary-700: #2d5a55;
+    /* Elegant Deep Teal */
+    --color-primary-800: #2b4945;
+    --color-primary-900: #263e3b;
+    --color-primary-950: #142423;
+
+    --color-gold-500: #d4af37;
+    --color-gold-600: #aa8c2c;
 }

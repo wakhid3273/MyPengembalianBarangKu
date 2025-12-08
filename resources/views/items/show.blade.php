@@ -1,71 +1,40 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Barang - MyPengembalianBarangKu</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .success-animation {
-            animation: successPop 0.6s ease-out;
-        }
-
-        @keyframes successPop {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .detail-card {
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen">
-    
+
+<body class="bg-stone-50 font-sans text-stone-800 min-h-screen">
+
     {{-- Header --}}
-    <header class="bg-white/10 backdrop-blur-md text-white shadow-lg">
+    <header class="bg-primary-900 text-white shadow-lg">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                    </svg>
+                    <div class="p-2 bg-white/10 rounded-lg">
+                        <svg class="w-6 h-6 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                        </svg>
+                    </div>
                     <div>
-                        <h1 class="text-xl font-bold">MyPengembalianBarangKu</h1>
-                        <p class="text-sm text-white/80">Detail Barang</p>
+                        <h1 class="text-xl font-sans font-bold tracking-wide">MyPengembalian<span
+                                class="text-gold-500">BarangKu</span></h1>
+                        <p class="text-xs text-primary-100 tracking-wider uppercase">Detail Barang</p>
                     </div>
                 </div>
-                
+
                 <div class="flex items-center gap-4">
-                    <div class="text-right">
-                        <p class="font-medium">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-white/80 capitalize">{{ Auth::user()->role }}</p>
+                    <div class="text-right hidden sm:block">
+                        <p class="font-medium text-white">{{ Auth::user()->name }}</p>
+                        <p class="text-xs text-primary-200 capitalize">{{ Auth::user()->role }}</p>
                     </div>
-                    <a href="{{ route('dashboard') }}" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition">
+                    <a href="{{ route('dashboard') }}"
+                        class="bg-primary-800 hover:bg-primary-700 border border-primary-700 px-4 py-2 rounded-lg transition text-sm font-medium shadow-sm hover:shadow">
                         Dashboard
                     </a>
                 </div>
@@ -76,119 +45,199 @@
     {{-- Main Content --}}
     <main class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto">
-            
+
             {{-- Success Alert --}}
             @if(session('success'))
-                <div class="success-animation bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl mb-6 flex items-center gap-4">
-                    <div class="bg-white/20 p-3 rounded-full">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div
+                    class="bg-emerald-50 border-l-4 border-emerald-500 text-emerald-700 px-6 py-4 rounded-r-xl shadow-sm mb-6 flex items-center gap-4 transform transition-all duration-500 hover:scale-[1.01]">
+                    <div class="bg-emerald-100 p-2 rounded-full">
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
                     </div>
                     <div>
                         <p class="font-bold text-lg">{{ session('success') }}</p>
-                        <p class="text-sm text-green-100">Barang telah tersimpan dalam sistem</p>
+                        <p class="text-sm text-emerald-600">Barang telah tersimpan dalam sistem</p>
                     </div>
                 </div>
             @endif
 
             {{-- Detail Card --}}
-            <div class="detail-card bg-white rounded-2xl shadow-2xl overflow-hidden">
-                
+            <div class="bg-white rounded-2xl shadow-md border border-stone-200 overflow-hidden">
+
                 {{-- Header Card --}}
-                <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-white/20 p-3 rounded-full">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
+                <div class="bg-primary-50 text-stone-800 p-6 border-b border-primary-100">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-white p-3 rounded-xl shadow-sm border border-primary-100">
+                                <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-sans font-bold text-primary-900">Detail Barang</h2>
+                                <p class="text-sm text-stone-500 font-mono">ID Barang: #{{ $item->item_id }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h2 class="text-2xl font-bold">Detail Barang yang Dilaporkan</h2>
-                            <p class="text-sm text-blue-100">ID Barang: #{{ $item->item_id }}</p>
+                        <div class="hidden md:block">
+                            <span
+                                class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white border border-stone-200 shadow-sm text-stone-600">
+                                {{ $item->category->category_name }}
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <div class="p-8">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
                         {{-- Left Column: Image --}}
-                        <div>
-                            <div class="bg-gray-100 rounded-xl overflow-hidden shadow-lg">
-                                <img 
-                                    src="{{ $item->getPhotoDisplayUrl() }}" 
-                                    alt="{{ $item->item_name }}"
-                                    class="w-full h-auto object-cover"
-                                    onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Tidak+Tersedia'"
-                                >
+                        <div class="space-y-4">
+                            <div
+                                class="bg-stone-100 rounded-xl overflow-hidden shadow-inner border border-stone-200 relative group">
+                                <img src="{{ $item->getPhotoDisplayUrl() }}" alt="{{ $item->item_name }}"
+                                    class="w-full h-auto object-cover transition duration-500 group-hover:scale-105"
+                                    onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Tidak+Tersedia'">
+                                <div
+                                    class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition duration-300">
+                                </div>
                             </div>
-                            <div class="mt-4 bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-                                <p class="text-xs font-semibold text-blue-800 mb-1">📁 Lokasi File:</p>
-                                <p class="text-xs text-blue-600 font-mono break-all">
-                                    storage/{{ $item->photo_url }}
-                                </p>
+
+                            {{-- Debug Info (styled nicely) --}}
+                            <div
+                                class="bg-stone-50 border border-stone-200 p-3 rounded-lg flex items-center gap-2 overflow-hidden">
+                                <svg class="w-4 h-4 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                                </svg>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-[10px] text-stone-500 uppercase tracking-wider font-semibold mb-0.5">
+                                        Lokasi File</p>
+                                    <p class="text-xs text-stone-600 font-mono truncate cursor-help"
+                                        title="storage/{{ $item->photo_url }}">
+                                        storage/{{ $item->photo_url }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
                         {{-- Right Column: Details --}}
-                        <div class="space-y-6">
-                            
-                            {{-- Status Badge --}}
-                            <div class="flex items-center gap-2">
-                                <span class="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
-                                    ✓ {{ ucfirst($item->status) }}
-                                </span>
-                                <span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
-                                    {{ $item->category->category_name }}
-                                </span>
-                            </div>
+                        <div class="space-y-8">
 
-                            {{-- Nama Barang --}}
+                            {{-- Title & Status --}}
                             <div>
-                                <label class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Nama Barang</label>
-                                <p class="text-2xl font-bold text-gray-800 mt-1">{{ $item->item_name }}</p>
+                                <div class="flex items-center gap-3 mb-3">
+                                    @if($item->status == 'claimed')
+                                        <span
+                                            class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-wide border border-green-200">
+                                            ✓ Diklaim
+                                        </span>
+                                    @else
+                                        <span
+                                            class="px-3 py-1 bg-gold-100 text-gold-700 rounded-full text-xs font-bold uppercase tracking-wide border border-gold-200">
+                                            ! Belum Diklaim
+                                        </span>
+                                    @endif
+                                    <span class="text-xs text-stone-400 font-medium">|</span>
+                                    <span class="text-xs text-stone-500 font-medium">
+                                        Diposting {{ $item->created_at->diffForHumans() }}
+                                    </span>
+                                </div>
+                                <h3 class="text-3xl font-sans font-bold text-stone-800 leading-tight">
+                                    {{ $item->item_name }}
+                                </h3>
                             </div>
 
                             {{-- Deskripsi --}}
-                            <div>
-                                <label class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Deskripsi</label>
-                                <p class="text-gray-700 mt-1 leading-relaxed">{{ $item->description }}</p>
+                            <div class="prose prose-stone">
+                                <p class="text-stone-600 leading-relaxed text-lg">
+                                    {{ $item->description }}
+                                </p>
                             </div>
 
                             {{-- Info Grid --}}
                             <div class="grid grid-cols-2 gap-4">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">Lokasi Penemuan</label>
-                                    <p class="text-gray-800 font-semibold mt-1">📍 {{ $item->location_found }}</p>
+                                <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
+                                    <p class="text-xs font-bold text-primary-600 uppercase tracking-wider mb-1">Lokasi
+                                        Penemuan</p>
+                                    <p class="text-stone-800 font-medium flex items-center gap-1.5">
+                                        <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                            </path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                        {{ $item->location_found }}
+                                    </p>
                                 </div>
-                                
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">Kategori</label>
-                                    <p class="text-gray-800 font-semibold mt-1">🏷️ {{ $item->category->category_name }}</p>
+
+                                <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
+                                    <p class="text-xs font-bold text-primary-600 uppercase tracking-wider mb-1">Kategori
+                                    </p>
+                                    <p class="text-stone-800 font-medium flex items-center gap-1.5">
+                                        <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                                            </path>
+                                        </svg>
+                                        {{ $item->category->category_name }}
+                                    </p>
                                 </div>
-                                
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">Tanggal Ditemukan</label>
-                                    <p class="text-gray-800 font-semibold mt-1">📅 {{ date('d/m/Y', strtotime($item->date_found)) }}</p>
+
+                                <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
+                                    <p class="text-xs font-bold text-primary-600 uppercase tracking-wider mb-1">Tanggal
+                                    </p>
+                                    <p class="text-stone-800 font-medium flex items-center gap-1.5">
+                                        <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                        {{ date('d/m/Y', strtotime($item->date_found)) }}
+                                    </p>
                                 </div>
-                                
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">Waktu Ditemukan</label>
-                                    <p class="text-gray-800 font-semibold mt-1">🕐 {{ date('H:i', strtotime($item->time_found)) }}</p>
+
+                                <div class="p-4 bg-stone-50 rounded-xl border border-stone-100">
+                                    <p class="text-xs font-bold text-primary-600 uppercase tracking-wider mb-1">Waktu
+                                    </p>
+                                    <p class="text-stone-800 font-medium flex items-center gap-1.5">
+                                        <svg class="w-4 h-4 text-stone-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        {{ date('H:i', strtotime($item->time_found)) }} WIB
+                                    </p>
                                 </div>
                             </div>
 
-                            {{-- Nomor Telepon --}}
-                            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg">
-                                <label class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2 block">Kontak Pelapor</label>
-                                <div class="flex items-center gap-3">
-                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                    </svg>
+                            {{-- Kontak Pelapor --}}
+                            <div class="bg-primary-50/50 border border-primary-100 p-5 rounded-xl">
+                                <label
+                                    class="text-xs font-bold text-primary-600 uppercase tracking-wide mb-3 block">Info
+                                    Kontak</label>
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                            </path>
+                                        </svg>
+                                    </div>
                                     <div>
-                                        <p class="text-xs text-gray-500 uppercase">Nomor Telepon</p>
-                                        <a href="tel:{{ $item->phone }}" class="text-lg font-bold text-green-700 hover:text-green-800 hover:underline">
+                                        <p class="text-xs text-stone-500 uppercase tracking-wide mb-0.5">Nomor Telepon
+                                        </p>
+                                        <a href="tel:{{ $item->phone }}"
+                                            class="text-lg font-bold text-primary-700 hover:text-primary-800 hover:underline">
                                             {{ $item->phone }}
                                         </a>
                                     </div>
@@ -196,15 +245,17 @@
                             </div>
 
                             {{-- Pelapor Info --}}
-                            <div class="border-t pt-4">
-                                <label class="text-sm font-semibold text-gray-500 uppercase tracking-wide">Dilaporkan Oleh</label>
-                                <div class="flex items-center gap-3 mt-2">
-                                    <div class="bg-gradient-to-br from-blue-500 to-purple-600 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold">
+                            <div class="border-t border-stone-100 pt-6">
+                                <p class="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-3">Dilaporkan
+                                    Oleh</p>
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="bg-primary-800 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-sm ring-2 ring-white">
                                         {{ substr($item->reporter->name, 0, 1) }}
                                     </div>
                                     <div>
-                                        <p class="font-semibold text-gray-800">{{ $item->reporter->name }}</p>
-                                        <p class="text-sm text-gray-500 capitalize">{{ $item->reporter->role }}</p>
+                                        <p class="font-bold text-stone-800 text-sm">{{ $item->reporter->name }}</p>
+                                        <p class="text-xs text-stone-500 capitalize">{{ $item->reporter->role }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -212,77 +263,54 @@
                     </div>
 
                     {{-- Action Buttons --}}
-                    <div class="mt-8 pt-6 border-t">
+                    <div class="mt-10 pt-8 border-t border-stone-100">
                         @if(Auth::id() === $item->reporter_id)
                             {{-- Tombol Edit dan Hapus untuk Owner --}}
-                            <div class="flex gap-4 mb-4">
-                                <a 
-                                    href="{{ route('items.edit', $item->item_id) }}"
-                                    class="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 text-white py-3 rounded-lg font-semibold text-center hover:shadow-lg transition"
-                                >
+                            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                                <a href="{{ route('items.edit', $item->item_id) }}"
+                                    class="flex-1 bg-gold-500 hover:bg-gold-600 text-white py-3.5 rounded-xl font-bold text-center shadow-sm hover:shadow-md transition text-lg">
                                     ✏️ Edit Barang
                                 </a>
-                                <form 
-                                    action="{{ route('items.destroy', $item->item_id) }}" 
-                                    method="POST" 
-                                    class="flex-1"
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini? Tindakan ini tidak dapat dibatalkan.');"
-                                >
+                                <form action="{{ route('items.destroy', $item->item_id) }}" method="POST" class="flex-1"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus barang ini? Tindakan ini tidak dapat dibatalkan.');">
                                     @csrf
                                     @method('DELETE')
-                                    <button 
-                                        type="submit"
-                                        class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition"
-                                    >
+                                    <button type="submit"
+                                        class="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl font-bold hover:shadow-md transition text-lg">
                                         🗑️ Hapus Barang
                                     </button>
                                 </form>
                             </div>
                         @elseif(Auth::user()->isAdmin())
-                            {{-- Tombol Hapus untuk Admin (untuk postingan user lain) --}}
+                            {{-- Tombol Hapus untuk Admin --}}
                             <div class="mb-4">
-                                <form 
-                                    action="{{ route('items.destroy', $item->item_id) }}" 
-                                    method="POST" 
-                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini sebagai admin? Tindakan ini tidak dapat dibatalkan.');"
-                                >
+                                <form action="{{ route('items.destroy', $item->item_id) }}" method="POST"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus postingan ini sebagai admin? Tindakan ini tidak dapat dibatalkan.');">
                                     @csrf
                                     @method('DELETE')
-                                    <button 
-                                        type="submit"
-                                        class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition"
-                                    >
+                                    <button type="submit"
+                                        class="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl font-bold hover:shadow-md transition text-lg">
                                         🗑️ Hapus Postingan (Admin)
                                     </button>
                                 </form>
                             </div>
                         @endif
-                        
-                        <div class="flex gap-4">
-                            <a 
-                                href="{{ route('dashboard') }}"
-                                class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold text-center hover:shadow-lg transition"
-                            >
+
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="{{ route('dashboard') }}"
+                                class="flex-1 bg-white border border-stone-300 text-stone-600 hover:bg-stone-50 py-3.5 rounded-xl font-semibold text-center transition">
                                 🏠 Kembali ke Dashboard
                             </a>
-                            <a 
-                                href="{{ route('items.create') }}"
-                                class="flex-1 border-2 border-blue-600 text-blue-600 py-3 rounded-lg font-semibold text-center hover:bg-blue-50 transition"
-                            >
+                            <a href="{{ route('items.create') }}"
+                                class="flex-1 bg-primary-50 border border-primary-200 text-primary-700 hover:bg-primary-100 py-3.5 rounded-xl font-semibold text-center transition">
                                 ➕ Laporkan Barang Lain
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {{-- Info Note --}}
-            <div class="mt-6 bg-white/10 backdrop-blur-md text-white p-4 rounded-lg">
-                <p class="text-sm">
-                    <strong>ℹ️ Info:</strong> Barang ini sekarang bisa dicari oleh pengguna lain. Status barang akan berubah saat ada yang mengklaim.
-                </p>
-            </div>
         </div>
     </main>
 </body>
+
 </html>
